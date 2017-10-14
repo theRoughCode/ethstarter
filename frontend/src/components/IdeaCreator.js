@@ -12,7 +12,7 @@ class IdeaCreator extends Component {
       price: 5000,
     };
     axios
-      .post('/submit', {})
+      .post('/submit', sample)
       .then(response => {
         console.log('res: ', response);
       })
