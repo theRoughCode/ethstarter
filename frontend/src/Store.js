@@ -1,7 +1,12 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'LANDED': {
+      return {...state, ...action.payload, showIdeas: true};
+    }
     case 'CREATE_CANCELLED': {
       return {...state, ...action.payload, showIdeas: true, showCreate: false};
     }
@@ -11,13 +16,18 @@ const reducer = (state, action) => {
     case 'NEW_CONTRACT': {
       return {...state, ...action.payload, showIdeas: false, showCreate: true};
     }
+    case 'CLICK_IDEA': {
+      return {...state, ...action.payload, showDetails: true, showIdeas: false, showCreate: false};
+    }
     default: {
       return {...state};
     }
   }
 };
 
-const store = createStore(reducer);
+
+const middleWare = applyMiddleware(logger);
+const store = createStore(reducer, middleWare);
 
 export default store;
 

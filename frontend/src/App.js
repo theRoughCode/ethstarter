@@ -9,6 +9,9 @@ import {FlatButton, FontIcon } from 'material-ui';
 
 class App extends Component {
 
+  componentDidMount() {
+    this.props.goToHome();
+  }
   openContractCreation() {
     this.props.openContractCreation();
   }
@@ -18,10 +21,11 @@ class App extends Component {
     if (this.props.showIdeas) {
       actionBtn = <FlatButton label="Create Contract" onClick={this.openContractCreation.bind(this)} />
     }
+
     return (
       <div className="ideas-page">
         <AppBar title={<span>AngelEth</span>}
-                iconElementLeft={<FontIcon className="material-icons">opacity</FontIcon>}
+                iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}}>opacity</FontIcon>}
                 iconElementRight={actionBtn}>
         </AppBar>
         {
@@ -35,8 +39,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    showIdeas: state.showIdeas,
-    showCreate: state.showCreate,
+    showIdeas: state.showIdeas || !(state.showCreate),
   }
 };
 
@@ -45,6 +48,11 @@ const mapDispatchToProps = (dispatch) => {
     openContractCreation: () => {
       dispatch({
         type: 'NEW_CONTRACT'
+      })
+    },
+    goToHome: () => {
+      dispatch({
+        type: 'LANDED'
       })
     }
   };
