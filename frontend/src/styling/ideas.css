@@ -1,0 +1,13 @@
+/* Move to page stylesheet */
+.page {
+    padding: 32px;
+}
+
+.ideas-grid {
+    display: grid;
+    grid-gap: 18px;
+}
+
+.idea-box {
+
+}
