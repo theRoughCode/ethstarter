@@ -1,5 +1,6 @@
 import { merge } from 'lodash';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import './palette.css';
 const colors = require('material-ui/styles/colors');
 
 const cryptoColors = {
