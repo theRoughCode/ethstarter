@@ -7,12 +7,12 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const routes = require('./routes');
 
-//  Connect all our routes to our application
-app.use('/', routes);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
+
+//  Connect all our routes to our application
+app.use('/', routes);
 
 // Turn on that server!
 app.listen(port, () =>

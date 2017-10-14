@@ -15,13 +15,14 @@ routes.get('/submit/:name/:price', function(req, res) {
 });
 
 routes.post('/submit', function(req, res) {
-  console.log(req);
-  req.checkBody('name', 'Invalid name').notEmpty().isAlpha();
+  req.checkBody('title', 'Invalid title').notEmpty().isAlpha();
+  req.checkBody('description', 'Invalid description').isAlpha();
   req.checkBody('price', 'Invalid price').notEmpty().isInt();
 
   //Trim and escape the name field.
-  req.sanitize('name').escape();
-  req.sanitize('name').trim();
+  req.sanitize('title').escape();
+  req.sanitize('description').escape();
+  req.sanitize('title').trim();
 
   var errors = req.validationErrors();
   if (errors) {
@@ -29,10 +30,19 @@ routes.post('/submit', function(req, res) {
   }
   else {
     var data = {
-      name: req.body.name,
-      price: req.body.price
+      title: req.body.title,
+      price: req.body.price,
+      description: req.body.description
     }
-    return res.send(data);
+    console.log(data);
+    database.addProposal(data.title, data.price, data.description)
+      .then(success => {
+        console.log("success");
+        return res.send(data);
+      }, error => {
+        console.log("error");
+        return res.send("Failed to update database");
+      })
   }
 });
 

@@ -30,7 +30,15 @@ function getUser(name) {
   return ref.child(name).once('value');
 }
 
+function addProposal(title, price, description) {
+  return ref.child(title).set({
+    "price": price,
+    "description": description
+  });
+}
+
 module.exports = {
   addUser,
-  getUser
+  getUser,
+  addProposal
 }
