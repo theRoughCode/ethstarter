@@ -12,13 +12,49 @@ const sampleIdeas = [
     description: 'BlockBuster for the Blockchain',
     price: 8000,
     share: 0.2,
+    growth: 12,
+    history: [
+      {
+        price: 1000,
+        date: 11123114243,
+      }
+    ]
   },
   {
     id: 'AD-333',
     title: 'Starblocks',
     description: 'Drink coffee the right way with other CypherPunks and pay in ZCash',
-    price: 5000,
+    price: 30000,
     share: 0.5,
+    growth: 4,
+    history: [
+      {
+        price: 400,
+        date: 11123114243,
+      },
+      {
+        price: 5000,
+        date: 11123115243,
+      },
+      {
+        price: 15000,
+        date: 11123116243,
+      }
+    ]
+  },
+  {
+    id: 'AF-444',
+    title: 'Mythforkers',
+    description: 'Coffee shop for Ethereum Developers only',
+    price: 500,
+    share: 0.5,
+  },
+  {
+    id: 'AZ-732',
+    title: 'Starblocks',
+    description: 'Drink coffee the right way with other CypherPunks and pay in ZCash',
+    price: 700,
+    share: 0.3,
   }
 ];
 

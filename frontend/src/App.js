@@ -24,7 +24,7 @@ class App extends Component {
 
     return (
       <div className="ideas-page">
-        <AppBar title={<span>AngelEth</span>}
+        <AppBar title={<span>AngelEth</span>} style={{backgroundColor: '#004080'}}
                 iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}}>opacity</FontIcon>}
                 iconElementRight={actionBtn}>
         </AppBar>
