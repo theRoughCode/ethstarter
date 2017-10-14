@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
@@ -23,9 +24,7 @@ class IdeaCreator extends Component {
   }
 
   cancel() {
-    // Store.dispatch({
-    //   type: 'CANCEL_CREATION'
-    // })
+    this.props.cancel();
   }
 
   render() {
@@ -67,4 +66,19 @@ class IdeaCreator extends Component {
   }
 }
 
-export default IdeaCreator;
+const mapStateToProps = (state) => {
+  return {
+    showIdeas: state.showIdeas,
+    showCreate: state.showCreate,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cancel: () => {
+      dispatch({type: 'CREATE_CANCELLED'});
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IdeaCreator);

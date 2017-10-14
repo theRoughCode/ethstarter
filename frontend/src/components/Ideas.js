@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import data from '../data/fakeIdeas';
 import '../styling/ideas.css';
 
-import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import Card, { CardHeader, CardContent, CardText } from 'material-ui/Card';
 // import Typography from 'material-ui/Typography';
 // import Grid from 'material-ui/Grid';
 
@@ -14,18 +15,17 @@ class Ideas extends Component {
   render() {
     return (
       <div className="page">
-        <div container className="ideas-grid">
+        <div className="ideas-grid">
             {
               data.map(idea => {
                 const priceLabel = 'Price: ' + idea.price;
                 return (
-                  <div className="ideas-item" onClick={this.goToIdea(idea.id)}>
+                  <div key={idea.id} className="ideas-item" onClick={this.goToIdea(idea.id)}>
                     <Card className="idea-box">
                       <CardHeader
                         title={idea.title}
-                        subheader={priceLabel} />
-                      <CardContent>
-                      </CardContent>
+                        subtitle={priceLabel} />
+                      <CardText>{idea.description}</CardText>
                     </Card>
                   </div>
                 )
@@ -37,4 +37,16 @@ class Ideas extends Component {
   }
 }
 
-export default Ideas;
+
+const mapStateToProps = (state) => {
+  return {
+    showIdeas: state.showIdeas,
+    showCreate: state.showCreate,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ideas);
