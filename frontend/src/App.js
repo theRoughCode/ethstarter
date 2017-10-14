@@ -1,22 +1,62 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import Ideas from './components/Ideas';
 import IdeaCreator from './components/IdeaCreator';
 
 import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-// import Typography from 'material-ui/Typography';
+import {FlatButton, FontIcon } from 'material-ui';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.goToHome();
+  }
+  openContractCreation() {
+    this.props.openContractCreation();
+  }
+
   render() {
+    let actionBtn;
+    if (this.props.showIdeas) {
+      actionBtn = <FlatButton label="Create Contract" onClick={this.openContractCreation.bind(this)} />
+    }
+
     return (
       <div className="ideas-page">
-        <AppBar position="static" color="default">
+        <AppBar title={<span>AngelEth</span>}
+                iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}}>opacity</FontIcon>}
+                iconElementRight={actionBtn}>
         </AppBar>
-        <IdeaCreator />
+        {
+          this.props.showIdeas ? <Ideas /> : <IdeaCreator />
+        }
       </div>
     );
   }
 }
 
-export default App;
+
+const mapStateToProps = (state) => {
+  return {
+    showIdeas: state.showIdeas || !(state.showCreate),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openContractCreation: () => {
+      dispatch({
+        type: 'NEW_CONTRACT'
+      })
+    },
+    goToHome: () => {
+      dispatch({
+        type: 'LANDED'
+      })
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
