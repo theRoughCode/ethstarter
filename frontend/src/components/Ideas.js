@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import data from '../data/fakeIdeas';
 import '../styling/ideas.css';
 
-import Card, { CardHeader, CardContent, CardText } from 'material-ui/Card';
+import Card, { CardHeader, CardText } from 'material-ui/Card';
 // import Typography from 'material-ui/Typography';
 // import Grid from 'material-ui/Grid';
 

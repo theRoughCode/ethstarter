@@ -7,11 +7,6 @@ import axios from 'axios';
 class IdeaCreator extends Component {
 
   createContract() {
-    const sample = {
-      title: 'Burger8',
-      description: 'A place where you can only buy burgers in packs of 8',
-      price: 5000,
-    };
     axios
       .post('/submit', {
         title: this.state.title,
