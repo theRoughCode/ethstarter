@@ -3,6 +3,8 @@ const admin = require('firebase-admin');
 require('dotenv').config();
 
 var serviceAccount = {};
+serviceAccount["type"] = process.env.TYPE;
+serviceAccount["project_id"] = process.env.PROJECT_ID;
 serviceAccount["private_key_id"] = process.env.FIREBASE_ID;
 serviceAccount["private_key"] = process.env.FIREBASE_KEY;
 serviceAccount["client_email"] = process.env.FIREBASE_EMAIL;
@@ -19,3 +21,16 @@ admin.initializeApp({
 
 var db = admin.database();
 var ref = db.ref('db');
+
+function addUser(name, price) {
+  return ref.child(name).set(price);
+}
+
+function getUser(name) {
+  return ref.child(name).once('value');
+}
+
+module.exports = {
+  addUser,
+  getUser
+}
