@@ -3,8 +3,8 @@ import data from '../data/fakeIdeas';
 import '../styling/ideas.css';
 
 import Card, { CardHeader, CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
+// import Typography from 'material-ui/Typography';
+// import Grid from 'material-ui/Grid';
 
 class Ideas extends Component {
 
@@ -14,27 +14,24 @@ class Ideas extends Component {
   render() {
     return (
       <div className="page">
-        <Grid container className="ideas-grid">
+        <div container className="ideas-grid">
             {
               data.map(idea => {
                 const priceLabel = 'Price: ' + idea.price;
                 return (
-                  <Grid item xs={4} onClick={this.goToIdea(idea.id)}>
+                  <div className="ideas-item" onClick={this.goToIdea(idea.id)}>
                     <Card className="idea-box">
                       <CardHeader
                         title={idea.title}
                         subheader={priceLabel} />
                       <CardContent>
-                        <Typography component="p">
-                          {idea.description}
-                        </Typography>
                       </CardContent>
                     </Card>
-                  </Grid>
+                  </div>
                 )
               })
             }
-        </Grid>
+        </div>
       </div>
     )
   }
