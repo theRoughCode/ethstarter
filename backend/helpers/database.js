@@ -22,23 +22,20 @@ admin.initializeApp({
 var db = admin.database();
 var ref = db.ref('db');
 
-function addUser(name, price) {
-  return ref.child(name).set(price);
-}
-
-function getUser(name) {
-  return ref.child(name).once('value');
-}
-
-function addProposal(title, price, description) {
-  return ref.child(title).set({
+function addProposal(title, price, description, mileStones, contractAddress) {
+  return ref.child(contractAddress).set({
+    "title": title,
     "price": price,
-    "description": description
+    "description": description,
+    "mileStones": mileStones
   });
 }
 
+function getProposal(title) {
+  return ref.child(title).once('value');
+}
+
 module.exports = {
-  addUser,
-  getUser,
-  addProposal
+  addProposal,
+  getProposal
 }

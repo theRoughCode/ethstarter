@@ -44,6 +44,7 @@
     "express": "^4.16.2",
     "express-validator": "^4.2.1",
     "firebase-admin": "^5.4.2",
+    "solc": "^0.4.17",
     "web3": "^0.20.1"
   },
   "repository": {
