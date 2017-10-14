@@ -1,0 +1,40 @@
+/* Move to page stylesheet */
+.page {
+    padding: 32px;
+}
+
+.ideas-grid {
+    display: grid;
+    grid-gap: 18px;
+}
+
+.idea-box {
+
+}
+
+.idea-form {
+    grid-gap: 10px;
+    display: grid;
+    padding: 32px;
+}
+
+.idea-title {
+    grid-column: 1/2;
+    grid-row: 1;
+}
+
+.idea-description {
+    grid-column: 1/3;
+    grid-row: 3;
+}
+
+.idea-price {
+    grid-column: 1/2;
+    grid-row: 2;
+}
+
+.create-btn {
+    grid-column: 1/3;
+    grid-row: 4;
+    height: 64px !important;
+}
