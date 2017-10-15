@@ -99,4 +99,8 @@ routes.get('/test', function(req, res) {
 	// });
 });
 
+routes.post('/proposals/image', function(req, res) {
+  ether.setImage(req.body.address, req.body.image, success => res.send(success));
+})
+
 module.exports = routes;

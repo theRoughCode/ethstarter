@@ -182,6 +182,10 @@ function getAbi(callback) {
   callback(abiDefinition);
 }
 
+function setImage(contractAddress, imageURL, callback) {
+  database.setImage(contractAddress, imageURL).then(success => callback(success));
+}
+
 module.exports = {
   getAccounts,
   createProposal,
@@ -189,5 +193,6 @@ module.exports = {
   getProposal,
   getAllProposals,
   generateHistory,
-  getAbi
+  getAbi,
+  setImage
 }
