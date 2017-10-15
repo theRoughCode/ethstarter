@@ -40,7 +40,7 @@ function addProposal(title, price, description, royalty, imageURL, mileStones, c
 function setInvestor(data) {
   return getProposal(data.proposalAddress).then(snapshot => {
     if (snapshot.val()) {
-      const investors = snapshot.val().investors;
+      const investors = (snapshot.val().investors) ? snapshot.val().investors : [];
       investors.push({
         amount: snapshot.val().price,
         address: data.investorAddress,
@@ -48,7 +48,7 @@ function setInvestor(data) {
         month: data.month,
         year: data.year
       })
-      proposalRef.child(`${data.contractAddress}/investors`).set(investors);
+      proposalRef.child(`${data.proposalAddress}/investors`).set(investors);
     }
   });
 }

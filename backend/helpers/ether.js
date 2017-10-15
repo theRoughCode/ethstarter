@@ -97,7 +97,7 @@ function createProposal(data, callback) {
 function investProposal(data, callback) {
   database.getProposal(data.proposalAddress).then(snapshot => {
     if(!snapshot.val())  return callback(null);
-    AgentContract.at(data.proposalAddress).deposit(Date.now()).send({
+    AgentContract.at(data.proposalAddress).deposit(Date.now(), {
       from: data.investorAddress,
       value: snapshot.val().price
     }, function(err, contract) {
