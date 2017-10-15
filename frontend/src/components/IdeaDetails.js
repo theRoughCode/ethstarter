@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Card, CardTitle, Paper, CardMedia, CardText, FlatButton } from 'material-ui';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import WEB3 from '../crypto/metamask';
 
 class IdeaDetails extends Component {
   constructor(props) {
@@ -17,7 +18,11 @@ class IdeaDetails extends Component {
     }
   }
   componentDidMount() {
-    if (this.props.address && !this.props.idea) {
+    if (this.props.idea && this.props.idea.contractAddress) {
+      this.setState({
+        idea: {...this.props.idea}
+      })
+    } else {
       console.log('adx: ', this.props.address);
       axios.get('/proposals/address' + this.props.address)
         .then(response => {
@@ -32,21 +37,18 @@ class IdeaDetails extends Component {
             }
           })
         });
-    } else {
-      this.setState({
-        idea: {...this.props.idea}
-      })
     }
   }
 
   invest = () => {
-    if (!this.props.userAddress) {
-
-    }
-    axios.post('/proposals/invest', {
-      proposalAddress: this.state.address,
-      investorAddress: this.state.userAddress,
-    })
+    const proposalAddress = this.state.idea && this.state.idea.contractAddress;
+    WEB3.eth.getCoinbase()
+      .then(investorAddress => {
+        axios.post('/proposals/invest', {
+          proposalAddress: proposalAddress,
+          investorAddress: investorAddress,
+        })
+      });
   };
 
   render() {
@@ -63,7 +65,7 @@ class IdeaDetails extends Component {
         <CardMedia overlay={cardTitle}>
           <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
         </CardMedia>
-        <CardText>
+        <CardText style={{display: 'flex', justifyContent: 'space-between'}}>
           <p>{this.state.idea.description}</p>
           <FlatButton label="Invest" onClick={this.invest.bind(this)} />
         </CardText>
