@@ -17,18 +17,16 @@ class App extends Component {
   }
 
   render() {
-    let actionBtns;
+    let actionBtn;
     if (this.props.showIdeas) {
-      let actionBtn = <FlatButton label="Create Contract" onClick={this.openContractCreation.bind(this)} />
-      let actionBtn2 = <FlatButton label="Sign up" id="civicSignupBtn" />
-      actionBtns = <div>{actionBtn}{actionBtn2}</div>
+      actionBtn = <FlatButton label="Create Contract" onClick={this.openContractCreation.bind(this)} />
     }
 
     return (
       <div className="ideas-page">
-        <AppBar title={<span>AngelEth</span>} style={{backgroundColor: '#004080'}}
+        <AppBar title={<span>AngelEth</span>} style={{backgroundColor: '#004080', paddingLeft: '64px', paddingRight: '64px'}}
                 iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}}>opacity</FontIcon>}
-                iconElementRight={actionBtns}>
+                iconElementRight={actionBtn}>
         </AppBar>
         {
           this.props.showIdeas ? <Ideas /> : <IdeaCreator />

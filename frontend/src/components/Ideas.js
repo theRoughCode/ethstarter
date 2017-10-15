@@ -5,19 +5,24 @@ import '../styling/ideas.css';
 import IdeaDetails from './IdeaDetails';
 
 import Card, { CardHeader, CardText, CardTitle, CardMedia } from 'material-ui/Card';
+import { Paper, FontIcon } from 'material-ui';
 
 class Idea extends Component {
   render() {
     const priceLabel = 'Price: ' + this.props.idea.price;
+    const cardTitle = (
+      <CardTitle title={this.props.idea.title} subtitleColor="red" style={{display: 'flex', justifyContent: 'space-between'}}>
+        <Paper style={{backgroundColor: 'orange', padding: '8px', width: 'fit-content'}} zDepth={1}>
+          ${this.props.idea.price}
+        </Paper>
+      </CardTitle>
+    )
     return (
       <div key={this.props.idea.id} className="ideas-item" onClick={this.props.callback}>
         <Card className="idea-box">
-          <CardMedia overlay={<CardTitle title={this.props.idea.title} subtitle={priceLabel} subtitleColor="red" />}>
+          <CardMedia overlay={cardTitle}>
             <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
           </CardMedia>
-          <CardHeader
-            title={this.props.idea.title}
-            subtitle={priceLabel} />
           <CardText>{this.props.idea.description}</CardText>
         </Card>
       </div>

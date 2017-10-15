@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
+import moment from 'moment';
 
 class IdeaCreator extends Component {
 
@@ -12,6 +13,24 @@ class IdeaCreator extends Component {
         title: this.state.title,
         description: this.state.desc,
         price: this.state.price,
+        royalty: this.state.royalty,
+        milestone: [
+          {
+            profit: '100',
+            amount: '500',
+            timestamp: moment('17/10/28').unix(),
+          },
+          {
+            profit: '120',
+            amount: '1000',
+            timestamp: moment('17/11/28').unix(),
+          },
+          {
+            profit: '200',
+            amount: '2000',
+            timestamp: moment('17/12/28').unix(),
+          },
+        ]
       })
       .then(response => {
         console.log('res: ', response);
@@ -34,15 +53,6 @@ class IdeaCreator extends Component {
              style={{width: '100%'}}
              onChange={(e) => this.setState({ title: e.target.value})}
           />
-          <TextField className="idea-price"
-             id="idea-price"
-             hintText="5000"
-             floatingLabelText="Amount To Raise"
-             type="number"
-             min="0"
-             style={{width: '100%'}}
-             onChange={(e) => this.setState({ price: e.target.value})}
-          />
           <TextField className="idea-description"
              id="idea-description"
              multiLine={true}
@@ -52,6 +62,24 @@ class IdeaCreator extends Component {
              rows={3}
              style={{width: '100%'}}
              onChange={(e) => this.setState({ desc: e.target.value})}
+          />
+          <TextField className="idea-price"
+             id="idea-price"
+             hintText="5000"
+             floatingLabelText="Amount To Raise"
+             type="number"
+             min="0"
+             style={{width: '100%'}}
+             onChange={(e) => this.setState({ price: e.target.value})}
+          />
+          <TextField className="idea-royalty"
+             id="idea-royalty"
+             hintText="40%"
+             floatingLabelText="Percentage of Profits to Share"
+             type="number"
+             min="0" max="80"
+             style={{width: '100%'}}
+             onChange={(e) => this.setState({ royalty: e.target.value * 0.01})}
           />
           <FlatButton className="create-btn" label="Create Contract" primary={true} onClick={this.createContract.bind(this)} />
           <FlatButton className="cancel-btn" label="Cancel" primary={false} onClick={this.cancel.bind(this)} />
