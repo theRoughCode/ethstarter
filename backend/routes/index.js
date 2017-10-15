@@ -3,8 +3,7 @@ const database = require('../helpers/database');
 const ether = require('../helpers/ether');
 
 routes.post('/proposals/create', function(req, res) {
-  req.checkBody('title', 'Invalid title').notEmpty().isAlpha();
-  req.checkBody('description', 'Invalid description').isAlpha();
+  req.checkBody('title', 'Invalid title').notEmpty();
   req.checkBody('price', 'Invalid price').notEmpty().isInt();
 
   //Trim and escape the name field.
@@ -28,7 +27,7 @@ routes.post('/proposals/create', function(req, res) {
         timeStamp: Date.now()
       }]
     }
-    
+
     ether.getAccounts(accounts => ether.createProposal(accounts[0], data, address => res.send(address)));
   }
 });
