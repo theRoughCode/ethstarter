@@ -5,7 +5,8 @@ import ContractInfoSection from './ContractInfoSection';
 import Milestones from './Milestones';
 import Store from '../Store';
 import axios from 'axios';
-
+import images from '../data/images';
+import WEB3 from '../crypto/metamask';
 
 class IdeaCreatorX extends Component {
 
@@ -15,7 +16,6 @@ class IdeaCreatorX extends Component {
       finished: false,
       stepIndex: 0,
     };
-    this.hold = {};
   }
 
   createContractX() {
@@ -24,36 +24,51 @@ class IdeaCreatorX extends Component {
       type: 'CONTRACT_CREATE_PENDING'
     });
 
-    axios
-      .post('/proposals/create', {
-        title: this.state.title,
-        description: this.state.desc,
-        price: this.state.price,
-        royalty: this.state.royalty,
-        milestones: this.state.milestones,
-      })
-      .then(response => {
-        if (response.data && typeof response.data === 'string') {
-          Store.dispatch({
-            type: 'CONTRACT_CREATE_SUCCEEDED',
-            payload: {
-              address: response.data,
+    WEB3.eth.getCoinbase()
+      .then(address => {
+        axios
+          .post('/proposals/create', {
+            image_url: images.pop(),
+            address: address,
+            title: this.state.title,
+            description: this.state.desc,
+            price: this.state.price,
+            royalty: this.state.royalty,
+            mileStones: this.state.milestones,
+          })
+          .then(response => {
+            if (response.data && typeof response.data === 'string') {
+              Store.dispatch({
+                type: 'CONTRACT_CREATE_SUCCEEDED',
+                payload: {
+                  address: response.data,
+                }
+              })
+            } else {
+              Store.dispatch({
+                type: 'CONTRACT_CREATE_FAILED',
+                payload: {
+                  error: 'Error Creating Contract',
+                }
+              })
             }
           })
-        } else {
-          Store.dispatch({
-            type: 'CONTRACT_CREATE_FAILED',
-            payload: {
-              error: 'Error Creating Contract',
-            }
-          })
-        }
+          .catch(err => {
+            Store.dispatch({
+              type: 'CONTRACT_CREATE_FAILED',
+              payload: {
+                error: 'Error Creating Contract',
+              }
+            });
+          });
       })
       .catch(err => {
+        console.log('No user address: ', err);
         Store.dispatch({
           type: 'CONTRACT_CREATE_FAILED',
           payload: {
-            error: 'Error Creating Contract',
+            error: 'MetaMask not setup',
+            errorStack: err,
           }
         });
       });

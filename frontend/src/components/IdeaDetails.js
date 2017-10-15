@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, CardHeader, CardText } from 'material-ui';
+import { Card, CardTitle, Paper, CardMedia, CardText, FlatButton } from 'material-ui';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ class IdeaDetails extends Component {
   componentDidMount() {
     if (this.props.address && !this.props.idea) {
       console.log('adx: ', this.props.address);
-      axios.get('/proposals/' + this.props.address)
+      axios.get('/proposals/address' + this.props.address)
         .then(response => {
           console.log(response);
           this.setState({
@@ -34,25 +34,39 @@ class IdeaDetails extends Component {
         });
     } else {
       this.setState({
-        idea: {...this.props}
+        idea: {...this.props.idea}
       })
     }
   }
+
+  invest = () => {
+    if (!this.props.userAddress) {
+
+    }
+    axios.post('/proposals/invest', {
+      proposalAddress: this.state.address,
+      investorAddress: this.state.userAddress,
+    })
+  };
+
   render() {
     const priceLabel = 'Price: ' + this.state.idea.price;
+    const cardTitle = (
+      <CardTitle title={this.state.idea.title} subtitleColor="red" style={{display: 'flex', justifyContent: 'space-between'}}>
+        <Paper style={{backgroundColor: 'orange', padding: '8px', width: 'fit-content'}} zDepth={1}>
+          ${this.state.idea.price}
+        </Paper>
+      </CardTitle>
+    );
     return (
       <Card className="idea-box">
-        <CardHeader
-          title={this.state.idea.title}
-          subtitle={priceLabel} />
-        {
-          this.state.idea.lastInvestment &&
-          <CardText>
-            <div className="last-paid">Last Investment: {this.state.idea.lastInvestment}</div>
-            <div className="growth">Growth Rate: {this.state.idea.growth}</div>
-          </CardText>
-        }
-        <CardText>{this.state.idea.description}</CardText>
+        <CardMedia overlay={cardTitle}>
+          <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
+        </CardMedia>
+        <CardText>
+          <p>{this.state.idea.description}</p>
+          <FlatButton label="Invest" onClick={this.invest.bind(this)} />
+        </CardText>
       </Card>
     )
   }
@@ -61,6 +75,7 @@ class IdeaDetails extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userAddress: state.userAddress,
   }
 };
 

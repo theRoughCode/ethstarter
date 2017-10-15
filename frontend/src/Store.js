@@ -28,6 +28,12 @@ const reducer = (state, action) => {
     case 'CLICK_IDEA': {
       return {...state, ...action.payload, showDetails: true, showIdeas: false, showCreate: false};
     }
+    case 'GOT_IDEAS': {
+      return {...state, ...action.payload, showIdeas: true, showCreate: false, showDetails: false};
+    }
+    case 'GOT_USER_ADDRESS': {
+      return {...state, ...action.payload};
+    }
     default: {
       return {...state};
     }

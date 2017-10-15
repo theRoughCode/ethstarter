@@ -10,10 +10,10 @@ routes.post('/proposals/create', function(req, res) {
   req.sanitize('title').escape();
   req.sanitize('title').trim();
   req.sanitize('description').escape();
-  req.sanitize('price').escape();
-  req.sanitize('price').trim();
-  req.sanitize('royalty').escape();
-  req.sanitize('royalty').trim();
+  // req.sanitize('price').escape();
+  // req.sanitize('price').trim();
+  // req.sanitize('royalty').escape();
+  // req.sanitize('royalty').trim();
   req.sanitize('address').escape();
   req.sanitize('address').trim();
 

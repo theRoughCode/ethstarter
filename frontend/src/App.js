@@ -8,9 +8,18 @@ import IdeaCreatorX from './components/IdeaCreatorX';
 import AppBar from 'material-ui/AppBar';
 import {FlatButton, FontIcon } from 'material-ui';
 
+import WEB3 from './crypto/metamask';
+console.log('web3 Instance: ', WEB3);
+
 class App extends Component {
 
   componentDidMount() {
+    WEB3.eth
+      .getCoinbase()
+      .then(address => {
+        console.log('Address: ', WEB3.eth.coinbase);
+        this.props.saveUserAddress(address);
+      });
     this.props.goToHome();
   }
   openContractCreation() {
@@ -30,7 +39,7 @@ class App extends Component {
                 iconElementRight={actionBtn}>
         </AppBar>
         {
-          this.props.showIdeas ? <Ideas /> : <IdeaCreatorX />
+          this.props.showIdeas ? <Ideas ideas={[]} /> : <IdeaCreatorX />
         }
       </div>
     );
@@ -54,6 +63,14 @@ const mapDispatchToProps = (dispatch) => {
     goToHome: () => {
       dispatch({
         type: 'LANDED'
+      })
+    },
+    saveUserAddress: (address) => {
+      dispatch({
+        type: 'GOT_USER_ADDRESS',
+        payload: {
+          userAddress: address,
+        }
       })
     }
   };
