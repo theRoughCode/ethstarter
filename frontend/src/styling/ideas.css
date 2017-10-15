@@ -5,7 +5,8 @@
 
 .ideas-grid {
     display: grid;
-    grid-gap: 18px;
+    grid-gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .idea-box {
