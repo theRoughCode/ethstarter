@@ -14,7 +14,7 @@ var abiDefinition;
 var web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testrpcPort}`));
 
 if (!web3.isConnected()) {
-  alert('Please start a node.');
+  console.log('Please start a node.');
 } else {
   accounts = web3.eth.accounts;
   compileContract(success => {
@@ -182,6 +182,10 @@ function getAbi(callback) {
   callback(abiDefinition);
 }
 
+function setImage(contractAddress, imageURL, callback) {
+  database.setImage(contractAddress, imageURL).then(success => callback(success));
+}
+
 module.exports = {
   getAccounts,
   createProposal,
@@ -189,5 +193,6 @@ module.exports = {
   getProposal,
   getAllProposals,
   generateHistory,
-  getAbi
+  getAbi,
+  setImage
 }
