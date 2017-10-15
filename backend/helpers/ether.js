@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const fs = require('fs');
 const solc = require('solc');
+const async = require('async');
 const database = require('./database');
 const testrpcPort = 8545
 const gasLimit = 4700000;
@@ -128,10 +129,54 @@ function getAccounts(callback) {
   callback(accounts);
 }
 
+function generateHistory(contractAddress, callback) {
+  generateInvestors(Math.round(Math.random() * 4 + 1), investorArr => {
+    database.generateInvestors(contractAddress, investorArr).then(success => {
+      var isAtLeastYear = investorArr[0].year <= 2016 && investorArr[0].month <= 9;
+      var growthArrSize = (isAtLeastYear) ? 12 : ((investorArr[0].year === 2016) ? 22 - investorArr[0].month : 11 - investorArr[0].month);
+      generateGrowth(growthArrSize, growthArr => {
+        database.generateGrowth(contractAddress, growthArr).then(success => {
+          callback(true);
+        }, error => {
+          console.error(err);
+          console.log(`Error generating growth for ${contractAddress}`);
+          callback(false);
+        });
+      });
+    }, error => {
+      console.error(err);
+      console.log(`Error generating investors for ${contractAddress}`);
+      callback(false);
+    })
+  });
+}
+
+function generateInvestors(arraySize, callback) {
+  async.times(arraySize, (i, next) => {
+    next(null, {
+      amount: (Math.random() * 50000 + 1000).toFixed(2),
+      day: Math.round(Math.random() * 28 + 1),
+      month: Math.round(Math.random() * 12 + 1),
+      year: Math.round(Math.random() * 3 + 2014)
+    });
+  }, (err, arr) => callback(arr.sort((a, b) => {
+      if (a.year !== b.year) return a.year - b.year;
+      else if (a.month !== b.month) return a.month - b.month;
+      else return a.day - b.day;
+    })));
+}
+
+function generateGrowth(arraySize, callback) {
+    async.times(arraySize, (i, next) => {
+      next(null, (Math.random() * 0.7 - 0.3).toFixed(2));
+    }, (err, arr) => callback(arr));
+}
+
 module.exports = {
   getAccounts,
   createProposal,
   investProposal,
   getProposal,
-  getAllProposals
+  getAllProposals,
+  generateHistory
 }

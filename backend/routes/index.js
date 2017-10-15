@@ -79,4 +79,8 @@ routes.get('/proposals', function(req, res) {
   });
 });
 
+routes.get('/proposals/growth/:address', function(req, res) {
+  ether.generateHistory(req.params.address, success => res.send(success));
+});
+
 module.exports = routes;
