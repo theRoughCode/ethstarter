@@ -2,6 +2,11 @@ const routes = require('express').Router();
 const database = require('../helpers/database');
 const ether = require('../helpers/ether');
 
+/*
+ * @params title, price, description, royalty, address, image_url, mileStones = {
+ amount, profit, timeStamp
+}
+ */
 routes.post('/proposals/create', function(req, res) {
   req.checkBody('title', 'Invalid title').notEmpty();
   req.checkBody('address', 'Invalid address').notEmpty();
@@ -10,10 +15,6 @@ routes.post('/proposals/create', function(req, res) {
   req.sanitize('title').escape();
   req.sanitize('title').trim();
   req.sanitize('description').escape();
-  req.sanitize('price').escape();
-  req.sanitize('price').trim();
-  req.sanitize('royalty').escape();
-  req.sanitize('royalty').trim();
   req.sanitize('address').escape();
   req.sanitize('address').trim();
 
@@ -33,6 +34,12 @@ routes.post('/proposals/create', function(req, res) {
       mileStones: req.body.mileStones
     }
 
+    data.mileStones = [
+      { amount: 500,
+        profit: 0.1,
+        timeStamp: 2302031230
+      }];
+
     ether.getAccounts(accounts => {
       data.address = accounts[0];
       ether.createProposal(data, address => res.send(address));
@@ -40,11 +47,14 @@ routes.post('/proposals/create', function(req, res) {
   }
 });
 
+/*
+ * @params proposalAddress, investorAddress, day, month, year
+ */
 routes.post('/proposals/invest', function(req, res) {
-  req.checkBody('proposalAddress', 'Invalid Proposal Address').notEmpty().isAlpha();
+  req.checkBody('proposalAddress', 'Invalid Proposal Address').notEmpty();
   req.sanitize('proposalAddress').escape();
   req.sanitize('proposalAddress').trim();
-  req.checkBody('investorAddress', 'Invalid Investor Address').notEmpty().isAlpha();
+  req.checkBody('investorAddress', 'Invalid Investor Address').notEmpty();
   req.sanitize('investorAddress').escape();
   req.sanitize('investorAddress').trim();
 
@@ -52,16 +62,17 @@ routes.post('/proposals/invest', function(req, res) {
   if (errors) {
     return res.send(errors);
   } else {
-    var data = {
+    ether.getAccounts(accounts => ether.investProposal({
       proposalAddress: req.body.proposalAddress,
-      investorAddress: req.body.investorAddress
-    }
-
-    ether.getAccounts(accounts => ether.investProposal(accounts[1], data, address => res.send(address)));
+      investorAddress: req.body.investorAddress,
+      day: req.body.day,
+      month: req.body.month,
+      year: req.body.year
+    }, address => res.send(address)));
   }
 });
 
-routes.get('/proposals/:address', function(req, res) {
+routes.get('/proposals/address/:address', function(req, res) {
   ether.getProposal(req.params.address, data => {
     res.send(data);
   });
@@ -76,5 +87,9 @@ routes.get('/proposals', function(req, res) {
 routes.get('/proposals/growth/:address', function(req, res) {
   ether.generateHistory(req.params.address, success => res.send(success));
 });
+
+routes.get('/proposals/abi', function(req, res) {
+  ether.getAbi(abi => res.send(abi));
+})
 
 module.exports = routes;

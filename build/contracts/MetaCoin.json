@@ -150,8 +150,39 @@
       },
       "address": "0x1a07dcc09d4336f42ffe6cc8de756079043d8149",
       "updated_at": 1507997232996
+    },
+    "1508052086661": {
+      "events": {
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "_to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event"
+        }
+      },
+      "links": {
+        "ConvertLib": "0x975d49be94e13e65efd2aad91d90c8c0ea6e150c"
+      },
+      "address": "0x0e41c09ab7e8050159073cbd41ee8217dd0415bd",
+      "updated_at": 1508066238702
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507997232996
+  "updated_at": 1508066238702
 }
