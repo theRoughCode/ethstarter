@@ -105,6 +105,9 @@ const mapDispatchToProps = (dispatch) => {
     cancel: () => {
       dispatch({type: 'CREATE_CANCELLED'});
     },
+    contractCreated: () => {
+      dispatch({type: 'CONTRACT_CREATED'})
+    }
   };
 };
 

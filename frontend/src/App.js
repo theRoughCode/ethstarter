@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import Ideas from './components/Ideas';
 import IdeaCreator from './components/IdeaCreator';
+import IdeaCreatorX from './components/IdeaCreatorX';
 
 import AppBar from 'material-ui/AppBar';
 import {FlatButton, FontIcon } from 'material-ui';
@@ -29,7 +30,7 @@ class App extends Component {
                 iconElementRight={actionBtn}>
         </AppBar>
         {
-          this.props.showIdeas ? <Ideas /> : <IdeaCreator />
+          this.props.showIdeas ? <Ideas /> : <IdeaCreatorX />
         }
       </div>
     );
