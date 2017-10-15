@@ -1,0 +1,232 @@
+{
+  "contract_name": "Agent",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "s",
+          "type": "string"
+        }
+      ],
+      "name": "stringToUint",
+      "outputs": [
+        {
+          "name": "result",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "investor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "startUp",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_profit",
+          "type": "uint256"
+        },
+        {
+          "name": "_amt",
+          "type": "uint256"
+        },
+        {
+          "name": "_timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "addMileStone",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "price",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "viewInfo",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "byTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "expire",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_startUp",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_mark",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewAgent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_investor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_balance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_byTtimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "depositSuccess",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_startUp",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_investor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amt",
+          "type": "uint256"
+        }
+      ],
+      "name": "TransferSuccess",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_startUp",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_investor",
+          "type": "address"
+        }
+      ],
+      "name": "Cancel",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x6060604052600060035560006004556000600655341561001e57600080fd5b60405160208061064e833981016040528080519150505b60008054600160a060020a03191633600160a060020a03908116919091179182905560028390556003547fa8e8e1e4a6b37cc847dbed5711ab20593b1e30204a631b17007452e6d4e944249290911690836040518084600160a060020a0316600160a060020a03168152602001838152602001828152602001935050505060405180910390a160006005555b505b61057c806100d26000396000f300606060405236156100965763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312514bba811461009b5780631bd95155146100b35780631e0018d61461011657806330e4a7841461014557806396d3542f14610174578063a035b1fe14610192578063ae601480146101b7578063b6b55f25146101e6578063bf81bf43146101f3575b600080fd5b34156100a657600080fd5b6100b160043561020b565b005b34156100be57600080fd5b61010460046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284375094965061031395505050505050565b60405190815260200160405180910390f35b341561012157600080fd5b61012961038e565b604051600160a060020a03909116815260200160405180910390f35b341561015057600080fd5b61012961039d565b604051600160a060020a03909116815260200160405180910390f35b341561017f57600080fd5b6100b16004356024356044356103ac565b005b341561019d57600080fd5b61010461041b565b60405190815260200160405180910390f35b34156101c257600080fd5b610129610421565b604051600160a060020a03909116815260200160405180910390f35b6100b1600435610431565b005b34156101fe57600080fd5b6100b16004356104be565b005b60055460009081526007602052604081205460035411801561024157506005546000908152600760205260409020600301548210155b15610285576005546000908152600760205260409081902060010154600160a060020a0333169181156108fc02919051600060405180830381858888f19450505050505b801561030d57600080546001805460055484526007602052604093849020909101547fa170301a3eaa747fe3afbb4de1c3601cf3dee8ef5a572fcb6aaca116cf42c8ee93600160a060020a03938416939092169151600160a060020a039384168152919092166020820152604080820192909252606001905180910390a16005805460010190555b5b5b5050565b600061031d610513565b50600090508181805b82518210156103855782828151811061033b57fe5b016020015160f860020a900460f860020a0260f860020a9004905060308110158015610368575060398111155b15610379576030810384600a020193505b5b600190910190610326565b5b505050919050565b600154600160a060020a031681565b600054600160a060020a031681565b6103b4610525565b838152602080820184905260608201839052600654600090815260079091526040902081908151815560208201518160010155604082015160028201805460ff19169115159190911790556060820151600390910155506006805460010190555b50505050565b60025481565b600154600160a060020a03165b90565b600254341480156104425750600454155b151561044d57600080fd5b3460048190556001547f65439bbe114810f2ff2f2b2e84ba52a6f51a8e8e81290d2eaed0b8eb1b75693391600160a060020a0390911690836040518084600160a060020a0316600160a060020a03168152602001838152602001828152602001935050505060405180910390a15b50565b60055460009081526007602052604090206003015481106104bb5733600160a060020a03166108fc6004549081150290604051600060405180830381858888f1935050505015156104bb57600080fd5b5b5b50565b60206040519081016040526000815290565b60806040519081016040528060008152602001600081526020016000151581526020016000815250905600a165627a7a7230582075502ab1796bad9d70e20f2663e3b9dc364d78bcb8a30af4b4909e79d275997d0029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1508013799186
+}

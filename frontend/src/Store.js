@@ -8,7 +8,7 @@ const reducer = (state, action) => {
       return {...state, ...action.payload, showIdeas: true};
     }
     case 'CREATE_CANCELLED': {
-      return {...state, ...action.payload, showIdeas: true, showCreate: false};
+      return {...action.payload, showIdeas: true, showCreate: false};
     }
     case 'CREATE_CONTRACT': {
       return {...state, ...action.payload, showIdeas: false, showCreate: true};

@@ -4,7 +4,7 @@ import data from '../data/fakeIdeas';
 import '../styling/ideas.css';
 import IdeaDetails from './IdeaDetails';
 
-import Card, { CardHeader, CardText } from 'material-ui/Card';
+import Card, { CardHeader, CardText, CardTitle, CardMedia } from 'material-ui/Card';
 
 class Idea extends Component {
   render() {
@@ -12,10 +12,12 @@ class Idea extends Component {
     return (
       <div key={this.props.idea.id} className="ideas-item" onClick={this.props.callback}>
         <Card className="idea-box">
+          <CardMedia overlay={<CardTitle title={this.props.idea.title} subtitle={priceLabel} subtitleColor="red" />}>
+            <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
+          </CardMedia>
           <CardHeader
             title={this.props.idea.title}
             subtitle={priceLabel} />
-          <CardText>asdasd</CardText>
           <CardText>{this.props.idea.description}</CardText>
         </Card>
       </div>

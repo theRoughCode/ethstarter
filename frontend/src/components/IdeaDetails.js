@@ -7,11 +7,19 @@ class IdeaDetails extends Component {
     super(props);
   }
   render() {
+    const priceLabel = 'Price: ' + this.props.idea.price;
     return (
       <Card className="idea-box">
         <CardHeader
           title={this.props.idea.title}
-          subtitle={this.props.idea.priceLabel} />
+          subtitle={priceLabel} />
+        {
+          this.props.idea.lastInvestment &&
+          <CardText>
+            <div className="last-paid">Last Investment: {this.props.idea.lastInvestment}</div>
+            <div className="growth">Growth Rate: {this.props.idea.growth}</div>
+          </CardText>
+        }
         <CardText>{this.props.idea.description}</CardText>
       </Card>
     )
