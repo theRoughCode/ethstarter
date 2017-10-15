@@ -42,8 +42,18 @@ function getAllProposals() {
   return proposalRef.once('value');
 }
 
+function generateGrowth(contractAddress, arr) {
+  return proposalRef.child(`${contractAddress}/growth`).set(arr);
+}
+
+function generateInvestors(contractAddress, arr) {
+  return proposalRef.child(`${contractAddress}/investors`).set(arr);
+}
+
 module.exports = {
   addProposal,
   getProposal,
-  getAllProposals
+  getAllProposals,
+  generateGrowth,
+  generateInvestors
 }
