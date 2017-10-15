@@ -71,7 +71,7 @@ class Ideas extends Component {
     );
     return (
       <div className="page">
-        { this.props.idea || this.props.address ? <IdeaDetails idea={this.props.idea} address={this.props.address} /> : IdeasList }
+        { this.props.showDetails ? <IdeaDetails idea={this.props.idea} address={this.props.address} /> : IdeasList }
       </div>
     )
   }

@@ -72,7 +72,8 @@ class IdeaDetails extends Component {
     return (
       <Card className="idea-box">
         <CardMedia overlay={cardTitle}>
-          <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
+          <img src={this.state.idea.imageURL} alt="" />
+          <div style={{width: '100%', backgroundColor: '#004893'}}></div>
         </CardMedia>
         <CardText style={{display: 'flex', justifyContent: 'space-between'}}>
           <p>{this.state.idea.description}</p>
