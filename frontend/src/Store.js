@@ -34,6 +34,9 @@ const reducer = (state, action) => {
     case 'GOT_USER_ADDRESS': {
       return {...state, ...action.payload};
     }
+    case 'INVEST': {
+      return {...state, ...action.payload};
+    }
     default: {
       return {...state};
     }

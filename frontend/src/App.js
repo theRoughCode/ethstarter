@@ -14,12 +14,8 @@ console.log('web3 Instance: ', WEB3);
 class App extends Component {
 
   componentDidMount() {
-    WEB3.eth
-      .getCoinbase()
-      .then(address => {
-        console.log('Address: ', WEB3.eth.coinbase);
-        this.props.saveUserAddress(address);
-      });
+    const address = WEB3.eth.coinbase;
+    this.props.saveUserAddress(address);
     this.props.goToHome();
   }
   openContractCreation() {

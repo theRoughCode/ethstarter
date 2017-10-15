@@ -3,6 +3,7 @@ import { Card, CardTitle, Paper, CardMedia, CardText, FlatButton } from 'materia
 import { connect } from 'react-redux';
 import axios from 'axios';
 import WEB3 from '../crypto/metamask';
+import moment from 'moment';
 
 class IdeaDetails extends Component {
   constructor(props) {
@@ -44,10 +45,22 @@ class IdeaDetails extends Component {
     const proposalAddress = this.state.idea && this.state.idea.contractAddress;
     WEB3.eth.getCoinbase()
       .then(investorAddress => {
-        axios.post('/proposals/invest', {
-          proposalAddress: proposalAddress,
-          investorAddress: investorAddress,
-        })
+        axios
+          .post('/proposals/invest', {
+            proposalAddress: proposalAddress,
+            investorAddress: investorAddress,
+            timeStamp: moment().unix(),
+          })
+          .then(response => {
+            if (response && typeof response.data === 'string') {
+              // Success
+              this.props.invested();
+            } else {
+              // error
+            }
+
+          })
+
       });
   };
 
@@ -82,7 +95,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    invested: () => {
+      dispatch({
+        type: 'INVESTED',
+      })
+    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IdeaDetails);
