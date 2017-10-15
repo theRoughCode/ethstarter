@@ -2,7 +2,7 @@ const routes = require('express').Router();
 const database = require('../helpers/database');
 const ether = require('../helpers/ether');
 
-routes.post('/proposal/create', function(req, res) {
+routes.post('/proposals/create', function(req, res) {
   req.checkBody('title', 'Invalid title').notEmpty().isAlpha();
   req.checkBody('description', 'Invalid description').isAlpha();
   req.checkBody('price', 'Invalid price').notEmpty().isInt();
@@ -14,6 +14,7 @@ routes.post('/proposal/create', function(req, res) {
 
   var errors = req.validationErrors();
   if (errors) {
+    console.log(errors);
     return res.send(errors);
   }
   else {
@@ -27,11 +28,12 @@ routes.post('/proposal/create', function(req, res) {
         timeStamp: Date.now()
       }]
     }
+    
     ether.getAccounts(accounts => ether.createProposal(accounts[0], data, address => res.send(address)));
   }
 });
 
-routes.post('/proposal/invest', function(req, res) {
+routes.post('/proposals/invest', function(req, res) {
   req.checkBody('proposalAddress', 'Invalid Proposal Address').notEmpty().isAlpha();
   req.sanitize('proposalAddress').escape();
   req.sanitize('proposalAddress').trim();
@@ -52,7 +54,7 @@ routes.post('/proposal/invest', function(req, res) {
   }
 });
 
-routes.get('/contract/:address', function(req, res) {
+routes.get('/proposals/:address', function(req, res) {
   ether.getVar(req.params.address, contract => {
     res.send(contract.startUp.call());
   });

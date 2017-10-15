@@ -8,7 +8,7 @@ class IdeaCreator extends Component {
 
   createContract() {
     axios
-      .post('/submit', {
+      .post('/proposals/create', {
         title: this.state.title,
         description: this.state.desc,
         price: this.state.price,

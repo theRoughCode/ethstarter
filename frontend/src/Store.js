@@ -30,5 +30,3 @@ const middleWare = applyMiddleware(logger);
 const store = createStore(reducer, middleWare);
 
 export default store;
-
-
