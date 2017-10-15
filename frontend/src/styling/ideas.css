@@ -13,6 +13,11 @@
 
 }
 
+.idea-img{
+  height: 200px;
+
+}
+
 .idea-form {
     grid-gap: 10px;
     display: grid;

@@ -11,7 +11,7 @@ import { Paper } from 'material-ui';
 class Idea extends Component {
   render() {
     const cardTitle = (
-      <CardTitle title={this.props.idea.title} subtitleColor="red" style={{display: 'flex', justifyContent: 'space-between'}}>
+      <CardTitle title={this.props.idea.title} titleColor="white" subtitleColor="red" style={{color:"white", display: 'flex', justifyContent: 'space-between'}}>
         <Paper style={{backgroundColor: 'orange', padding: '8px', width: 'fit-content'}} zDepth={1}>
           ${this.props.idea.price}
         </Paper>
@@ -20,8 +20,10 @@ class Idea extends Component {
     return (
       <div key={this.props.idea.contractAddress} className="ideas-item" onClick={this.props.callback}>
         <Card className="idea-box">
-          <CardMedia overlay={cardTitle}>
-            <div style={{width: '100%', backgroundColor: '#004893', height: '360px'}}></div>
+
+          <CardMedia overlay={<CardTitle title={cardTitle}/>}>
+          <img src={this.props.idea.imageURL} alt=""/>
+            <div style={{width: '100%', backgroundColor: '#004893'}}></div>
           </CardMedia>
         </Card>
       </div>
