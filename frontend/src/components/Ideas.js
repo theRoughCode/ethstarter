@@ -51,7 +51,7 @@ class Ideas extends Component {
     );
     return (
       <div className="page">
-        { this.props.idea ? <IdeaDetails idea={this.props.idea} /> : IdeasList }
+        { this.props.idea || this.props.address ? <IdeaDetails idea={this.props.idea} address={this.props.address} /> : IdeasList }
       </div>
     )
   }
@@ -61,6 +61,7 @@ class Ideas extends Component {
 const mapStateToProps = (state) => {
   return {
     showDetails: state.showDetails,
+    address: state.address,
     idea: state.idea,
   }
 };

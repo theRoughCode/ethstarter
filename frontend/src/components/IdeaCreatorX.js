@@ -15,27 +15,48 @@ class IdeaCreatorX extends Component {
       finished: false,
       stepIndex: 0,
     };
+    this.hold = {};
   }
 
-  createContract() {
+  createContractX() {
+
+    Store.dispatch({
+      type: 'CONTRACT_CREATE_PENDING'
+    });
+
     axios
       .post('/proposals/create', {
         title: this.state.title,
         description: this.state.desc,
         price: this.state.price,
         royalty: this.state.royalty,
-        milestone: this.state.milestones,
+        milestones: this.state.milestones,
       })
       .then(response => {
-        if (response.data) {
-          this.props.contractCreated(response.data)
+        if (response.data && typeof response.data === 'string') {
+          Store.dispatch({
+            type: 'CONTRACT_CREATE_SUCCEEDED',
+            payload: {
+              address: response.data,
+            }
+          })
+        } else {
+          Store.dispatch({
+            type: 'CONTRACT_CREATE_FAILED',
+            payload: {
+              error: 'Error Creating Contract',
+            }
+          })
         }
       })
       .catch(err => {
         Store.dispatch({
-          type: 'LANDED'
+          type: 'CONTRACT_CREATE_FAILED',
+          payload: {
+            error: 'Error Creating Contract',
+          }
         });
-      })
+      });
 
   }
 
@@ -48,7 +69,7 @@ class IdeaCreatorX extends Component {
       finished: finished,
     });
     if (finished) {
-      this.createContract()
+      this.createContractX()
     }
   };
 
@@ -106,11 +127,10 @@ class IdeaCreatorX extends Component {
           </Step>
         </Stepper>
         <div style={contentStyle}>
-          {finished ? (
-              <p>
-                Loading...
-              </p>
-            ) : (
+          {finished ?
+            (<h2>Loading...</h2>)
+            :
+            (
               <div>
                 <div>{this.getStepContent(stepIndex)}</div>
                 <div style={btnStyle}>

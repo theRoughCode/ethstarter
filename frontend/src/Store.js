@@ -13,6 +13,15 @@ const reducer = (state, action) => {
     case 'CREATE_CONTRACT': {
       return {...state, ...action.payload, showIdeas: false, showCreate: true};
     }
+    case 'CONTRACT_CREATE_PENDING': {
+      return {...action.payload, showLoading: true, showDetails: false};
+    }
+    case 'CONTRACT_CREATE_SUCCEEDED': {
+      return {...action.payload, showLoading: false, showDetails: true};
+    }
+    case 'CONTRACT_CREATE_FAILED': {
+      return {...action.payload, showLoading: false, showDetails: false, showIdeas: true};
+    }
     case 'NEW_CONTRACT': {
       return {...state, ...action.payload, showIdeas: false, showCreate: true};
     }
