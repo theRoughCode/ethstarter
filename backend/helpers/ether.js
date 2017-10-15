@@ -9,6 +9,7 @@ const gasLimit = 4700000;
 var accounts;
 var bytecode;
 var AgentContract;
+var abiDefinition;
 
 var web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testrpcPort}`));
 
@@ -28,7 +29,7 @@ function compileContract(callback) {
     var compiledCode = solc.compile(code);
     bytecode = compiledCode.contracts[':Agent'].bytecode;
     var abi = compiledCode.contracts[':Agent'].interface;
-    var abiDefinition = JSON.parse(abi);
+    abiDefinition = JSON.parse(abi);
     AgentContract = web3.eth.contract(abiDefinition);
   } catch (err) {
     console.log(err);
@@ -90,20 +91,24 @@ function createProposal(data, callback) {
   }
 }
 
-function investProposal(proposalAddress, investorAddress, callback) {
-  database.getProposal(proposalAddress, snapshot => {
+/*
+ * @params proposalAddress, investorAddress, day, month, year
+ */
+function investProposal(data, callback) {
+  database.getProposal(data.proposalAddress).then(snapshot => {
     if(!snapshot.val())  return callback(null);
-
-    AgentContract.at(proposalAddress).deposit(Date.now(), {
-      from: investorAddress,
-      gas: gasLimit,
+    AgentContract.at(data.proposalAddress).deposit(Date.now()).send({
+      from: data.investorAddress,
       value: snapshot.val().price
     }, function(err, contract) {
       if (err) {
         console.error(err);
         return callback(err)
       } else {
-        callback(contract.address);
+        database.setInvestor(data).then(success => callback(contract.address), err => {
+          console.error(err);
+          callback(null);
+        });
       }
     });
   })
@@ -172,11 +177,16 @@ function generateGrowth(arraySize, callback) {
     }, (err, arr) => callback(arr));
 }
 
+function getAbi(callback) {
+  callback(abiDefinition);
+}
+
 module.exports = {
   getAccounts,
   createProposal,
   investProposal,
   getProposal,
   getAllProposals,
-  generateHistory
+  generateHistory,
+  getAbi
 }
