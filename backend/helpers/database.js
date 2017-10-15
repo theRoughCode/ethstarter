@@ -20,22 +20,30 @@ admin.initializeApp({
 });
 
 var db = admin.database();
-var ref = db.ref('db');
+var proposalRef = db.ref('proposals');
 
-function addProposal(title, price, description, mileStones, contractAddress) {
-  return ref.child(contractAddress).set({
+function addProposal(title, price, description, royalty, imageURL, mileStones, contractAddress, entrepreneurAddress) {
+  return proposalRef.child(contractAddress).set({
     "title": title,
     "price": price,
     "description": description,
+    "royalty": royalty,
+    "imageURL": imageURL,
+    "entrepreneurAddress": entrepreneurAddress,
     "mileStones": mileStones
   });
 }
 
-function getProposal(title) {
-  return ref.child(title).once('value');
+function getProposal(contractAddress) {
+  return proposalRef.child(contractAddress).once('value');
+}
+
+function getAllProposals() {
+  return proposalRef.once('value');
 }
 
 module.exports = {
   addProposal,
-  getProposal
+  getProposal,
+  getAllProposals
 }

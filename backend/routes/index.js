@@ -5,11 +5,19 @@ const ether = require('../helpers/ether');
 routes.post('/proposals/create', function(req, res) {
   req.checkBody('title', 'Invalid title').notEmpty();
   req.checkBody('price', 'Invalid price').notEmpty().isInt();
+  req.checkBody('royalty', 'Invalid royalty').notEmpty().isDecimal();
+  req.checkBody('address', 'Invalid address').notEmpty();
 
   //Trim and escape the name field.
   req.sanitize('title').escape();
-  req.sanitize('description').escape();
   req.sanitize('title').trim();
+  req.sanitize('description').escape();
+  req.sanitize('price').escape();
+  req.sanitize('price').trim();
+  req.sanitize('royalty').escape();
+  req.sanitize('royalty').trim();
+  req.sanitize('address').escape();
+  req.sanitize('address').trim();
 
   var errors = req.validationErrors();
   if (errors) {
@@ -21,6 +29,9 @@ routes.post('/proposals/create', function(req, res) {
       title: req.body.title,
       price: req.body.price,
       description: req.body.description,
+      royalty: req.body.royalty,
+      address: req.body.address,
+      image_url: req.body.image_url,
       mileStones: [{
         profit: 10,
         amount: 1000,
@@ -28,7 +39,10 @@ routes.post('/proposals/create', function(req, res) {
       }]
     }
 
-    ether.getAccounts(accounts => ether.createProposal(accounts[0], data, address => res.send(address)));
+    ether.getAccounts(accounts => {
+      data.address = accounts[0];
+      ether.createProposal(data, address => res.send(address));
+    });
   }
 });
 
@@ -54,9 +68,15 @@ routes.post('/proposals/invest', function(req, res) {
 });
 
 routes.get('/proposals/:address', function(req, res) {
-  ether.getVar(req.params.address, contract => {
-    res.send(contract.startUp.call());
+  ether.getProposal(req.params.address, data => {
+    res.send(data);
   });
-})
+});
+
+routes.get('/proposals', function(req, res) {
+  ether.getAllProposals(data => {
+    res.send(data);
+  });
+});
 
 module.exports = routes;
