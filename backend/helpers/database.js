@@ -34,6 +34,25 @@ function addProposal(title, price, description, royalty, imageURL, mileStones, c
   });
 }
 
+/*
+ * @params proposalAddress, investorAddress, day, month, year
+ */
+function setInvestor(data) {
+  return getProposal(data.proposalAddress).then(snapshot => {
+    if (snapshot.val()) {
+      const investors = snapshot.val().investors;
+      investors.push({
+        amount: snapshot.val().price,
+        address: data.investorAddress,
+        day: data.day,
+        month: data.month,
+        year: data.year
+      })
+      proposalRef.child(`${data.contractAddress}/investors`).set(investors);
+    }
+  });
+}
+
 function getProposal(contractAddress) {
   return proposalRef.child(contractAddress).once('value');
 }
@@ -52,6 +71,7 @@ function generateInvestors(contractAddress, arr) {
 
 module.exports = {
   addProposal,
+  setInvestor,
   getProposal,
   getAllProposals,
   generateGrowth,
