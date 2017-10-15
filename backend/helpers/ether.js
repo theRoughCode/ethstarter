@@ -14,7 +14,7 @@ var abiDefinition;
 var web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testrpcPort}`));
 
 if (!web3.isConnected()) {
-  alert('Please start a node.');
+  console.log('Please start a node.');
 } else {
   accounts = web3.eth.accounts;
   compileContract(success => {
