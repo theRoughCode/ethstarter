@@ -4,8 +4,6 @@ const ether = require('../helpers/ether');
 
 routes.post('/proposals/create', function(req, res) {
   req.checkBody('title', 'Invalid title').notEmpty();
-  req.checkBody('price', 'Invalid price').notEmpty().isInt();
-  req.checkBody('royalty', 'Invalid royalty').notEmpty().isDecimal();
   req.checkBody('address', 'Invalid address').notEmpty();
 
   //Trim and escape the name field.
@@ -32,11 +30,7 @@ routes.post('/proposals/create', function(req, res) {
       royalty: req.body.royalty,
       address: req.body.address,
       image_url: req.body.image_url,
-      mileStones: [{
-        profit: 10,
-        amount: 1000,
-        timeStamp: Date.now()
-      }]
+      mileStones: req.body.mileStones
     }
 
     ether.getAccounts(accounts => {
