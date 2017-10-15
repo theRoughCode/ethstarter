@@ -66,9 +66,7 @@ routes.post('/proposals/invest', function(req, res) {
     ether.getAccounts(accounts => ether.investProposal({
       proposalAddress: req.body.proposalAddress,
       investorAddress: req.body.investorAddress,
-      day: req.body.day,
-      month: req.body.month,
-      year: req.body.year
+      timeStamp: req.body.timeStamp
     }, address => res.send(address)));
   }
 });

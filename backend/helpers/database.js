@@ -44,10 +44,8 @@ function setInvestor(data) {
       investors.push({
         amount: snapshot.val().price,
         address: data.investorAddress,
-        day: data.day,
-        month: data.month,
-        year: data.year
-      })
+        timeStamp: data.timeStamp
+      });
       proposalRef.child(`${data.proposalAddress}/investors`).set(investors);
     }
   });

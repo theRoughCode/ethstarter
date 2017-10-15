@@ -105,7 +105,8 @@ function investProposal(data, callback) {
         console.error(err);
         return callback(err)
       } else {
-        database.setInvestor(data).then(success => callback(contract.address), err => {
+        console.log(contract);
+        database.setInvestor(data).then(success => callback(contract), err => {
           console.error(err);
           callback(null);
         });
