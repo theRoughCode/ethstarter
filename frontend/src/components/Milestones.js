@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Card, FlatButton, DatePicker } from 'material-ui';
+import moment from 'moment';
 
 class Milestones extends Component {
 
@@ -53,7 +54,7 @@ class Milestones extends Component {
                              id="milestone-date"
                              hintText="Date To Achieve Milestone"
                              style={{width: '100%', marginTop: '24px'}}
-                             onChange={(e, date) => { milestone.date = date; }}
+                             onChange={(e, date) => { milestone.date = moment(date).unix(); }}
                   />
                 </div>
               )

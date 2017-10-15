@@ -69,6 +69,11 @@ class IdeaCreatorX extends Component {
       finished: finished,
     });
     if (finished) {
+      this.state.milestones.pop();
+      this.state.milestones.map(m => {
+        delete m.index;
+        return m;
+      });
       this.createContractX()
     }
   };
