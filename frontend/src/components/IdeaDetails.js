@@ -25,7 +25,7 @@ class IdeaDetails extends Component {
       })
     } else {
       console.log('adx: ', this.props.address);
-      axios.get('/proposals/address' + this.props.address)
+      axios.get('/proposals/address/' + this.props.address)
         .then(response => {
           console.log(response);
           this.setState({
@@ -43,24 +43,20 @@ class IdeaDetails extends Component {
 
   invest = () => {
     const proposalAddress = this.state.idea && this.state.idea.contractAddress;
-    WEB3.eth.getCoinbase()
-      .then(investorAddress => {
-        axios
-          .post('/proposals/invest', {
-            proposalAddress: proposalAddress,
-            investorAddress: investorAddress,
-            timeStamp: moment().unix(),
-          })
-          .then(response => {
-            if (response && typeof response.data === 'string') {
-              // Success
-              this.props.invested();
-            } else {
-              // error
-            }
-
-          })
-
+    const investorAddress = WEB3.eth.coinbase;
+    axios
+      .post('/proposals/invest', {
+        proposalAddress: proposalAddress,
+        investorAddress: investorAddress,
+        timeStamp: moment().unix(),
+      })
+      .then(response => {
+        if (response && typeof response.data === 'string') {
+          // Success
+          this.props.invested();
+        } else {
+          // error
+        }
       });
   };
 

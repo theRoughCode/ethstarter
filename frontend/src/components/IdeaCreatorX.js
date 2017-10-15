@@ -24,55 +24,42 @@ class IdeaCreatorX extends Component {
       type: 'CONTRACT_CREATE_PENDING'
     });
 
-    WEB3.eth.getCoinbase()
-      .then(address => {
-        axios
-          .post('/proposals/create', {
-            image_url: images.pop(),
-            address: address,
-            title: this.state.title,
-            description: this.state.desc,
-            price: this.state.price,
-            royalty: this.state.royalty,
-            mileStones: this.state.milestones,
-          })
-          .then(response => {
-            if (response.data && typeof response.data === 'string') {
-              Store.dispatch({
-                type: 'CONTRACT_CREATE_SUCCEEDED',
-                payload: {
-                  address: response.data,
-                }
-              })
-            } else {
-              Store.dispatch({
-                type: 'CONTRACT_CREATE_FAILED',
-                payload: {
-                  error: 'Error Creating Contract',
-                }
-              })
+    const address = WEB3.eth.coinbase;
+    axios
+      .post('/proposals/create', {
+        image_url: images.pop(),
+        address: address,
+        title: this.state.title,
+        description: this.state.desc,
+        price: this.state.price,
+        royalty: this.state.royalty,
+        mileStones: this.state.milestones,
+      })
+      .then(response => {
+        if (response.data && typeof response.data === 'string') {
+          Store.dispatch({
+            type: 'CONTRACT_CREATE_SUCCEEDED',
+            payload: {
+              address: response.data,
             }
           })
-          .catch(err => {
-            Store.dispatch({
-              type: 'CONTRACT_CREATE_FAILED',
-              payload: {
-                error: 'Error Creating Contract',
-              }
-            });
-          });
+        } else {
+          Store.dispatch({
+            type: 'CONTRACT_CREATE_FAILED',
+            payload: {
+              error: 'Error Creating Contract',
+            }
+          })
+        }
       })
       .catch(err => {
-        console.log('No user address: ', err);
         Store.dispatch({
           type: 'CONTRACT_CREATE_FAILED',
           payload: {
-            error: 'MetaMask not setup',
-            errorStack: err,
+            error: 'Error Creating Contract',
           }
         });
       });
-
   }
 
   handleNext = () => {
