@@ -42,20 +42,20 @@ function isContractInstantiated() {
 
 /*
  * @params {string} ownerAddress,
- * data { title, price, description, mileStones: { profit, amount, timeStamp } }
+ * data { title, price, description, royalty, address, image_url, mileStones: { profit, amount, timeStamp } }
  * @returns address of contract
  */
-function createProposal(ownerAddress, data, callback) {
+function createProposal(data, callback) {
   if (!isContractInstantiated()) {
     console.log('Contract is not instantiated.');
     callback(null);
-  } else if (!ownerAddress) {
+  } else if (!data.address) {
     console.log('Owner address is invalid.');
     callback(null);
   } else {
-    AgentContract.new(data.price, {
+    AgentContract.new(data.price, data.royalty, {
       data: bytecode,
-      from: ownerAddress,
+      from: data.address,
       gas: gasLimit
     }, function(e, contract){
       if(!e) {
@@ -63,12 +63,12 @@ function createProposal(ownerAddress, data, callback) {
           console.log("Contract transaction send: TransactionHash: " + contract.transactionHash + " waiting to be mined...");
         } else {
           console.log("Contract mined! Address: " + contract.address);
-          database.addProposal(data.title, data.price, data.description, data.mileStones, contract.address)
+          database.addProposal(data.title, data.price, data.description, data.royalty, data.image_url, data.mileStones, contract.address, data.address)
             .then(success => {
               console.log("Created new contract successfully");
               data.mileStones.forEach((item) => {
                 contract.addMileStone(item.profit, item.amount, item.timeStamp, {
-                  from: ownerAddress,
+                  from: data.address,
                   gas: gasLimit
                 }, function(err, contract) {
                   if (err) return callback(err)
@@ -78,10 +78,13 @@ function createProposal(ownerAddress, data, callback) {
               return callback(contract.address);
             }, error => {
               console.log(error);
-              return callback("Failed to update database");
+              return callback("Failed to update database.");
             })
         }
-      } else console.log(e);
+      } else {
+        console.log(e);
+        return callback("Failed to create new contract.");
+      }
     });
   }
 }
@@ -105,8 +108,20 @@ function investProposal(proposalAddress, investorAddress, callback) {
   })
 }
 
-function getVar(address, callback) {
-  callback(AgentContract.at(address));
+function getProposal(address, callback) {
+  database.getProposal(address).then(snapshot => {
+    if (!snapshot.val()) {
+      console.error('ERROR: Address does not exist.');
+      return callback(null);
+    } else return callback(snapshot.val());
+  });
+}
+
+function getAllProposals(callback) {
+  database.getAllProposals().then(snapshot => {
+    if (!snapshot.val()) callback(null);
+    else callback(snapshot.val());
+  });
 }
 
 function getAccounts(callback) {
@@ -117,5 +132,6 @@ module.exports = {
   getAccounts,
   createProposal,
   investProposal,
-  getVar
+  getProposal,
+  getAllProposals
 }
