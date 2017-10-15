@@ -11,7 +11,7 @@ var storjUploadFile = function(bucketid, filePath, callback) {
    console.log("storjTest() start");
    execFile('storj.exe', args, {
    		env:envVariables
-   	}, function(err, data) {  
+   	}, function(err, data) {
         console.log(err)
         var storjResponse = data.toString();
         console.log(storjResponse);
@@ -35,7 +35,7 @@ var storjDownloadFile = function(bucketid, fileid, filepath, callback) {
    console.log("storjTest() start");
    execFile('storj.exe', args, {
    		env:envVariables
-   	}, function(err, data) {  
+   	}, function(err, data) {
         console.log(err)
         var storjResponse = data.toString();
         console.log(storjResponse);
@@ -62,3 +62,10 @@ var testStorjDownload = function() {
 
 //testStorjUpload(); // basically have to change the filename every time you upload so its different
 //testStorjDownload(); //haveto change the filename every time you downlaod so you can overwrite
+
+module.exports = {
+  storjUploadFile,
+  storjDownloadFile,
+  testStorjUpload,
+  testStorjDownload
+}

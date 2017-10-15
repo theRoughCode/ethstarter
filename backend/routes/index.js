@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 const database = require('../helpers/database');
 const ether = require('../helpers/ether');
+const storj = require('../../pos/app');
 
 /*
  * @params title, price, description, royalty, address, image_url, mileStones = {
@@ -90,6 +91,14 @@ routes.get('/proposals/growth/:address', function(req, res) {
 
 routes.get('/proposals/abi', function(req, res) {
   ether.getAbi(abi => res.send(abi));
-})
+});
+
+routes.get('/test', function(req, res) {
+  storj.testStorjUpload();
+  // storj.storjUploadFile('02b560e4a3ba3cf97189aeb8', '../../pos/img/Statement_of_Account_Excel_Example.png', function(fileid) {
+	// 	console.log("got file id:" + fileid);
+  //   res.send(fileid);
+	// });
+});
 
 module.exports = routes;
