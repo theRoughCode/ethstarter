@@ -68,7 +68,7 @@ function generateInvestors(contractAddress, arr) {
 }
 
 function setImage(contractAddress, imageUrl) {
-  return proposalRef.child(`${contractAddress}/imageUrl`).set(imageUrl);
+  return proposalRef.child(`${contractAddress}/imageURL`).set(imageUrl);
 }
 
 module.exports = {
