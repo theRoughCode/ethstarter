@@ -1,5 +1,5 @@
 const images = [
-  'https://www.nortec.org.au/wp-content/uploads/2015/10/featured-business-about-us.jpg',
+  'https://www.nortec.org.au/wp-content/uploads/2015/10/featured-business-about-us.jpgg',
   'https://s3.amazonaws.com/credibly/incredibly/wp-content/uploads/2016/05/03123313/small-business-websites-man-at-computer-open-for-business.jpg',
   'http://www.capitis.com.au/wp-content/uploads/2015/05/small_business.jpg',
   'https://i.pinimg.com/originals/14/e2/c8/14e2c830cf79bce2be18231d49074647.jpg',

@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'LANDED': {
-      return {...state, ...action.payload, showIdeas: true};
+      return {...state, ...action.payload, showIdeas: true, showDetails: false};
     }
     case 'CREATE_CANCELLED': {
       return {...action.payload, showIdeas: true, showCreate: false};

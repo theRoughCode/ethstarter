@@ -22,6 +22,9 @@ class App extends Component {
     this.props.openContractCreation();
   }
 
+  goHome() {
+    this.props.goBack();
+  }
   render() {
     let actionBtn;
     if (this.props.showIdeas) {
@@ -31,7 +34,8 @@ class App extends Component {
     return (
       <div className="ideas-page">
         <AppBar title={<span>AngelEth</span>} style={{backgroundColor: '#004080', paddingLeft: '64px', paddingRight: '64px'}}
-                iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}}>opacity</FontIcon>}
+                iconElementLeft={<FontIcon className="material-icons" style={{fontSize: '48px'}} >opacity</FontIcon>}
+                onTitleTouchTap={this.goHome.bind(this)}
                 iconElementRight={actionBtn}>
         </AppBar>
         {
@@ -67,6 +71,11 @@ const mapDispatchToProps = (dispatch) => {
         payload: {
           userAddress: address,
         }
+      })
+    },
+    goBack: () => {
+      dispatch({
+        type: 'LANDED',
       })
     }
   };

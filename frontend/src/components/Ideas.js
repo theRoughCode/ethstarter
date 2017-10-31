@@ -11,7 +11,11 @@ import { Paper } from 'material-ui';
 class Idea extends Component {
   render() {
     const cardTitle = (
+<<<<<<< HEAD
       <CardTitle title={this.props.idea.title} titleColor="white" subtitleColor="red" style={{color:"white", display: 'flex', justifyContent: 'space-between'}}>
+=======
+      <CardTitle title={this.props.idea.title} titleColor="white" subtitleColor="red" style={{display: 'flex', justifyContent: 'space-between'}}>
+>>>>>>> 00b7a349fc57237ac1109708da0fef451ce87889
         <Paper style={{backgroundColor: 'orange', padding: '8px', width: 'fit-content'}} zDepth={1}>
           ${this.props.idea.price}
         </Paper>
@@ -20,9 +24,14 @@ class Idea extends Component {
     return (
       <div key={this.props.idea.contractAddress} className="ideas-item" onClick={this.props.callback}>
         <Card className="idea-box">
+<<<<<<< HEAD
 
           <CardMedia overlay={<CardTitle title={cardTitle}/>}>
           <img src={this.props.idea.imageURL} alt=""/>
+=======
+          <CardMedia overlay={cardTitle}>
+          <img src={this.props.idea.imageURL} alt="" />
+>>>>>>> 00b7a349fc57237ac1109708da0fef451ce87889
             <div style={{width: '100%', backgroundColor: '#004893'}}></div>
           </CardMedia>
         </Card>
@@ -72,7 +81,7 @@ class Ideas extends Component {
     );
     return (
       <div className="page">
-        { this.props.idea || this.props.address ? <IdeaDetails idea={this.props.idea} address={this.props.address} /> : IdeasList }
+        { this.props.showDetails ? <IdeaDetails idea={this.props.idea} address={this.props.address} /> : IdeasList }
       </div>
     )
   }
